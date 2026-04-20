@@ -79,16 +79,25 @@ namespace BugPro {
     static void Main() {
       Console.WriteLine("BugPro: Stateless Workflow\n");
 
-      var bug = new Bug("Критическая ошибка БД");
+      var bug1 = new Bug("Критическая ошибка БД");
 
-      bug.Fire(Trigger.Analyze);
+      bug1.Fire(Trigger.Analyze);
+      bug1.Fire(Trigger.StartFixing);
+      bug1.Fire(Trigger.Ok);
+      bug1.Fire(Trigger.ProblemSolved);
 
-      bug.Fire(Trigger.StartFixing);
+      Console.WriteLine($"\nФинальный статус: {bug1.CurrentState}");
 
-      bug.Fire(Trigger.Ok);
-      bug.Fire(Trigger.ProblemSolved);
+      var bug2 = new Bug("Утечка памяти");
 
-      Console.WriteLine($"\nФинальный статус: {bug.CurrentState}");
+      bug2.Fire(Trigger.Analyze);
+      bug2.Fire(Trigger.NeedMoreInfo);
+      bug2.Fire(Trigger.NowNoTime);
+      bug2.Fire(Trigger.StartFixing);
+      bug2.Fire(Trigger.Ok);
+      bug2.Fire(Trigger.ProblemSolved);
+
+      Console.WriteLine($"\nФинальный статус: {bug2.CurrentState}");
     }
   }
 }
